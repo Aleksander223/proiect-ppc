@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  worker1:
+    container_name: worker1
+    stdin_open: true
+    image: worker:1
+    network_mode: "host"
+
+  worker2:
+    container_name: worker2
+    stdin_open: true
+    image: worker:1
+    network_mode: "host"
