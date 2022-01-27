@@ -1,14 +1,32 @@
-version: '3'
+# version: '3'
 
+# services:
+#   worker1:
+#     container_name: worker1
+#     stdin_open: true
+#     image: worker:1
+#     network_mode: "host"
+
+#   worker2:
+#     container_name: worker2
+#     stdin_open: true
+#     image: worker:1
+#     network_mode: "host"
+
+version: '3'
 services:
   worker1:
-    container_name: worker1
-    stdin_open: true
-    image: worker:1
-    network_mode: "host"
-
+    build: ./worker
+    ports:
+    - "5001:5000"
   worker2:
-    container_name: worker2
-    stdin_open: true
-    image: worker:1
-    network_mode: "host"
+    build: ./worker
+    ports:
+    - "5002:5000"
+  nginx:
+    build: ./nginx
+    ports:
+    - "8080:80"
+    depends_on:
+    - worker1
+    - worker2
