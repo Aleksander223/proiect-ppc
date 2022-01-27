@@ -3,7 +3,7 @@ import pymongo
 from pymongo import MongoClient
 from tqdm import tqdm
 
-fileLocation = "C:/Users/Aleks/Documents/dosart/testtttt/5_year_weather_data.csv"
+fileLocation = "./5_year_weather_data.csv"
 dbUrl = "mongodb://localhost:27017/"
 dbName = "weather_db"
 collName = "weather"
