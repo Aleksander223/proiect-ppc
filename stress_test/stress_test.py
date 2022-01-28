@@ -13,8 +13,9 @@ if __name__ == '__main__':
     urlList = []
     for _ in range(100):
         urlList.append({'url': 'http://127.0.0.1:8080/api/predict',
-                        'params': {'latitude': '{:.2f}'.format(random.uniform(40, 50)),
-                                   'longitude': '{:.2f}'.format(random.uniform(20, 30))}})
+                        'params': {'error': int(random.uniform(3, 8)),
+                                   'latitude': '{:.2f}'.format(random.uniform(40, 50)),
+                                   'longitude': '{:.2f}'.format(random.uniform(20, 30)),}})
     succ = 0
     fail = 0
     with ThreadPoolExecutor(max_workers=64) as pool:
