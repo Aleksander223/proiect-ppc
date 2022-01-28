@@ -27,7 +27,7 @@ def optimize_ARIMA(generated_list, exog):
     return best
 
 
-def generate_parameters(max_d=1, max_ar=3, max_ma=3):
+def generate_parameters(max_d=1, max_ar=2, max_ma=2):
     ps = range(0, max_ar)
     d = range(0, max_d)
     qs = range(0, max_ma)
@@ -46,9 +46,9 @@ def generate_parameters(max_d=1, max_ar=3, max_ma=3):
     return order_list, seasonal_pdq
 
 
-def predict(data, days_prediction_input):
+def predict(data, days_prediction_input, col='temp'):
     date_cols = ['year', 'mo', 'da']
-    important_cols = ['date', 'temp']
+    important_cols = ['date', col]
 
     data['date'] = data[date_cols].apply(lambda row: pd.to_datetime('-'.join(row.values.astype(str))).date(), axis=1)
 
@@ -58,18 +58,18 @@ def predict(data, days_prediction_input):
     temp_df = temp_df.loc[mask]
 
     my_range = pd.date_range(start=min(temp_df.date), end=max(temp_df.date), freq='B')
-    temp_mean = temp_df['temp'].mean()
+    temp_mean = temp_df[col].mean()
     for x in my_range.difference(temp_df.date):
-        temp_df = pd.concat([temp_df, pd.DataFrame([[x, temp_mean]], columns=['date', 'temp'])])
+        temp_df = pd.concat([temp_df, pd.DataFrame([[x, temp_mean]], columns=['date', col])])
 
     temp_df.index = pd.DatetimeIndex(temp_df.date).to_period('D')
     temp_df = temp_df.sort_index()
 
-    N = len(data.temp)
+    N = len(data[col])
     split = 1
     training_size = round(split * N)
 
-    train_series = temp_df.temp[:training_size]
+    train_series = temp_df[col][:training_size]
 
     result = optimize_ARIMA(generate_parameters(), exog=train_series)
 

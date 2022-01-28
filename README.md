@@ -1,16 +1,23 @@
 # proiect-ppc
 
-Requirements:
-```sh
-$ apt install rabbitmq-server
-``` 
+## Introduction
+This app simulates a distributed weather prediction service. It uses multiple workers to distribute the requests, thus ensuring better operation. The data is taken from the open weather dataset
+```noaa-gsod```, and was processed into a dataset using Google BigQuery. The data is localised to Romania.
 
-Usage:
+## Technologies
+* Docker
+* MongoDB
+* Python
+* FastAPI
+* Google BigQuery
+* Nginx
+
+## Requirements
+
+* Docker
+
+## Usage
 ```sh
-$ # start the rabbitmq server
-$ service rabbitmq-server start/enable/restart
-$ # build the worker image
-$ docker build -f Dockerfile . -t worker:1
-$ # start your worker (you can define as many as you want in docker-compose file)
-$ docker-compose up -d
+$ docker-compose up build
+$ docker-compose up
 ```

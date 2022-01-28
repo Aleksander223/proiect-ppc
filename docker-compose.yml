@@ -18,11 +18,19 @@ services:
   worker1:
     build: ./worker
     ports:
-    - "5001:5000"
+      - "5001:5000"
+    depends_on:
+      - mongo
+    environment:
+      - TIMEOUT=300
   worker2:
     build: ./worker
     ports:
-    - "5002:5000"
+      - "5002:5000"
+    depends_on:
+      - mongo
+    environment:
+      - TIMEOUT=300
   nginx:
     build: ./nginx
     ports:
